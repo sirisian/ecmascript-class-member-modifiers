@@ -8,7 +8,7 @@ This introduces tried and tested ideas from other languages for allowing develop
 
 One important difference in this proposal is that static members and methods can be accessed from any instance of the class and also using "this" inside of the class. What this means is whether a variable, say 'x', is public, private, or static inside of the class you access it like this.x.
 
-# Public
+## Public
 
 ```js
 class A
@@ -23,7 +23,7 @@ class A
 }
 ```
 
-# Private
+## Private
 ```js
 class A
 {
@@ -50,7 +50,7 @@ class B extends A
 }
 ```
 
-## Private constructor
+### Private constructor
 
 Used in utility classes, singleton, factory, and various other designs. A private constructor stops instances from being made. It also stops classes from extending it since constructing the class would involved invoking the private constructor.
 
@@ -65,7 +65,7 @@ class A
 // let a = new A(); // Invalid
 ```
 
-# Protected
+## Protected
 
 ```js
 class A
@@ -82,7 +82,7 @@ class B extends A
 }
 ```
 
-# Static
+## Static
 
 ```js
 class A
@@ -99,6 +99,28 @@ class B extends A
 {
 	
 }
+```
+
+### Static constructor
+
+A static constructor is invoked before first use of the class whether that's an instance being created or a static member accessed. It can be used to set
+
+```js
+class A
+{
+	static constructor()
+	{
+		console.log('static constructor');
+	}
+	constructor()
+	{
+		console.log('constructor');
+	}
+}
+
+let a = new A();
+// static constructor
+// constructor
 ```
 
 # Abstract
@@ -119,6 +141,10 @@ let b = new B();
 ```
 
 # Friend
+
+```js
+
+```
 
 ```js
 class Example
