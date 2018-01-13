@@ -245,5 +245,3 @@ example.Example5(example2);
 example.Example6(example2);
 // example.Example7(example2); // error x is private (in Example2)
 ```
-
-This brings up future features like friends and other concepts, but this is designed to be simple.
