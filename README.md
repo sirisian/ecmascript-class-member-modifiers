@@ -123,7 +123,7 @@ let a = new A();
 // constructor
 ```
 
-# Abstract
+## Abstract
 
 ```js
 abstract class A
@@ -140,7 +140,7 @@ class B extends A
 let b = new B();
 ```
 
-# Friend
+## Friend
 
 ```js
 
