@@ -4,6 +4,8 @@
 
 This introduces tried and tested ideas from other languages for allowing developers to control code encapsulation.
 
+This proposal ignores implementation details or feasibility to see more what an ideal system would look like and if it's possible to work toward such features.
+
 ## 'this' behavior
 
 One important difference in this proposal is that static members and methods can be accessed from any instance of the class and also using "this" inside of the class. What this means is whether a variable, say 'x', is public, private, or static inside of the class you access it like this.x.
@@ -88,10 +90,9 @@ class B extends A
 class A
 {
 	static x;
-	private static y;
 	constructor()
 	{
-		this.x; // identical to this.constructor.y = 0;
+		this.x; // identical to this.constructor.x = 0;
 	}
 }
 
@@ -101,16 +102,35 @@ class B extends A
 }
 ```
 
-### Static constructor
-
-A static constructor is invoked before first use of the class whether that's an instance being created or a static member accessed. It can be used to set
+### Private static
 
 ```js
 class A
 {
+	private static x;
+}
+
+class B extends A
+{
+	static x;
+}
+```
+
+### Static constructor
+
+A static constructor is invoked before first use of the class whether that's an instance being created or a static member accessed. It takes no arguments and can be used to set static members.
+
+```js
+class A
+{
+	static x = [];
 	static constructor()
 	{
 		console.log('static constructor');
+		for (let i = 0; i < 100; ++i)
+		{
+			this.x.push(i);
+		}
 	}
 	constructor()
 	{
@@ -143,105 +163,51 @@ let b = new B();
 ## Friend
 
 ```js
-
+class A
+{
+	friend B;
+	friend C.f(a);
+	friend f();
+	private a;
+}
 ```
 
+Using friend for a whole class B allows B to access any private member in A.
+
 ```js
-class Example
+class B
 {
-	w; // public
-	private x;
-	static y; // Optional in this example since assigning this.y in the static constructor would define a static member y
-	private static z;
-  
-	static constructor()
+	constructor(a)
 	{
-		this.y = 0; // identical to this.constructor.y = 0;
-		this.z = 0; // identical to this.constructor.z = 0;
-	}
-  
-	constructor(w, x, y, z)
-	{
-		this.w = w;
-		this.x = x;
-		this.y = y; // identical to this.constructor.y = y;
-		this.z = z; // identical to this.constructor.z = z;
-	}
-	
-	private static Example1(y, z)
-	{
-		// this.w = 0; // error w is not static
-		// this.x = 0; // error x is not static
-		this.y = y;
-		this.z = z;
-	}
-	
-	static Example2(y, z)
-	{
-		Example1(y, z);
-	}
-	
-	get X()
-	{
-		return this.x;
-	}
-	
-	set X(x)
-	{
-		this.x = x;
-	}
-	
-	private Example3()
-	{
-		return this.w + this.x + this.y + this.z;
-	}
-
-  	Example4()
-	{
-		return this.Example3();
-	}
-	
-	Example5(example)
-	{
-		example.x = 5; // Without types is it possible to know if x is private?
-	}
-	
-	Example6(example:Example)
-	{
-		example.x = 5; // With types this is the same class and in general languages allow this.
-	}
-	
-	Example7(example:Example2)
-	{
-		example.x = 5; // error x is private
+		a.a = 0;
 	}
 }
 
-class Example2
+let a = new A();
+let b = new B(a);
+```
+
+Using friend with an class method allows that method to access private members in A.
+
+```js
+class C
 {
-	private x;
+	f(a)
+	{
+		a.a = 0;
+	}
 }
 
-Example.y = 0; // identical to Example.constructor.y = 0;
-Example.z = 0; // identical to Example.constructor.z = 0;
-// Example.Example1(0, 0); // error Example1 is private
-Example.Example2(0, 0);
+let a = new A();
+let b = new B();
+b.f(a);
+```
 
-let example = new Example(0, 0, 0, 0);
-example.w = 0;
-example.x = 0;
-example.y = 0;
-// example.z = 0; // error z is private
-// example.Example1(0, 0); // error Example1 is private
-example.Example2(0, 0);
-let x = example.X;
-example.X = 0;
-// example.Example3(); // error Example3 is private
-example.Example4();
-example.Example5(example);
-example.Example6(example);
-let example2 = new Example2();
-example.Example5(example2);
-example.Example6(example2);
-// example.Example7(example2); // error x is private (in Example2)
+A friend function allows a function in scope to access the private members.
+
+```js
+function f(a)
+{
+	a.a = 0;
+}
 ```
