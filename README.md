@@ -6,10 +6,6 @@ This introduces tried and tested ideas from other languages for allowing develop
 
 This proposal ignores implementation details or feasibility to see more what an ideal system would look like and if it's possible to work toward such features.
 
-## 'this' behavior
-
-One important difference in this proposal is that static members and methods can be accessed from any instance of the class and also using "this" inside of the class. What this means is whether a variable, say 'x', is public, private, or static inside of the class you access it like this.x.
-
 ## Public
 
 ```js
@@ -108,7 +104,7 @@ class A
 	static x;
 	constructor()
 	{
-		this.x = 0; // identical to this.constructor.x = 0;
+		this.constructor.x = 0; // or A.x = 0;
 	}
 }
 
@@ -116,7 +112,7 @@ class B extends A
 {
 	constructor()
 	{
-		this.x = 1;
+		this.constructor.x = 1; // Can access static super class public members in extended classes
 	}
 }
 ```
@@ -131,7 +127,7 @@ class A
 
 class B extends A
 {
-	static x;
+	static x; // Distinct from A.x
 }
 
 // A.x = 0; // Invalid, x is private
@@ -176,7 +172,7 @@ class A
 		console.log('static constructor');
 		for (let i = 0; i < 100; ++i)
 		{
-			this.x.push(i);
+			this.constructor.x.push(i);
 		}
 	}
 	constructor()
@@ -259,9 +255,7 @@ class B
 }
 ```
 
-## Using public, private, and static together
-
-Because this can access any modifier there's a consistent syntax.
+## Example using public, private, and static together
 
 ```js
 class A
@@ -271,9 +265,11 @@ class A
 	static z;
 	f()
 	{
-		return this.x + this.y + this.z;
+		return this.x + this.y + this.constructor.z;
 	}
 }
+let a = new A();
+a.f();
 ```
 
 ## Abstract function syntax
