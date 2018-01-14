@@ -195,13 +195,13 @@ let a = new A();
 class A
 {
 	friend B; // friend class
-	friend C.f(a); // friend class method
-	friend f(); // friend function
+	friend C.f; // friend class method
+	friend f; // friend function
 	private a;
 }
 ```
 
-Using friend for a whole class B allows B to access any private member in A.
+Using friend for a whole class B allows B to access private members in A.
 
 ```js
 class B
@@ -216,7 +216,7 @@ let a = new A();
 let b = new B(a);
 ```
 
-Using friend with an class method allows that method to access private members in A.
+Using friend with a class method allows that method to access private members in A.
 
 ```js
 class C
