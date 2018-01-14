@@ -274,3 +274,21 @@ class A
 	}
 }
 ```
+
+## Abstract function syntax
+
+```js
+class A
+{
+	x(); // No function body indicates this is an abstract function
+}
+class B extends A
+{
+	x()
+	{
+	}
+}
+// let a = new A(); // Abstract function x undefined.
+let b = new B();
+b.x();
+```
