@@ -296,4 +296,36 @@ let b = new B();
 b.x();
 ```
 
-This does bring up a question if "abstract" as a keyword modifier on classes and functions is necessary. One argument for including it is to ensure that protected constructor isn't bypassed using a friend modifier.
+This does bring up a question if "abstract" as a keyword modifier on classes and functions is necessary. One argument for including it is to ensure that protected constructor isn't bypassed using a friend modifier. Including it creates two similar ways to create abstract classes. One way being a protected constructor and the other with an abstract function or class modifier.
+
+## Extending modifiers
+
+```js
+class A 
+{
+	x;
+	private y;
+	protected z;
+}
+
+class B extends A
+{
+    // x is public
+    // y is not accessible
+    // z is protected
+};
+
+class C extends private A
+{
+    // x is private
+    // y is not accessible
+    // z is private
+};
+
+class D extends protected A
+{
+    // x is protected
+    // y is not accessible
+    // z is protected
+};
+```
