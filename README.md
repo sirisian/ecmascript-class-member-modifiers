@@ -281,7 +281,7 @@ class A
 class A
 {
 	x(); // No function body indicates this is an abstract function
-	// private x(); // Illegal, private functions cannot be abstract
+	// private x(); // Illegal, private methods cannot be abstract
 }
 class B extends A
 {
