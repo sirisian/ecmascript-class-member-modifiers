@@ -92,13 +92,16 @@ class A
 	static x;
 	constructor()
 	{
-		this.x; // identical to this.constructor.x = 0;
+		this.x = 0; // identical to this.constructor.x = 0;
 	}
 }
 
 class B extends A
 {
-	
+	constructor()
+	{
+		this.x = 1;
+	}
 }
 ```
 
@@ -114,7 +117,35 @@ class B extends A
 {
 	static x;
 }
+
+// A.x = 0; // Invalid, x is private
+B.x = 0;
 ```
+
+"static private x;" would not be allowed so the order of the modifiers matters.
+
+### Protected static
+
+
+```js
+class A
+{
+	protected static x;
+}
+
+class B extends A
+{
+	constructor()
+	{
+		this.x = 0;
+	}
+}
+
+// A.x = 0; // Invalid, x is private
+// B.x = 0; // Invalid, x is private
+```
+
+Similarly as private "static protected x;" is invalid syntax.
 
 ### Static constructor
 
