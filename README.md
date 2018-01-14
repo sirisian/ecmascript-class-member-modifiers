@@ -40,8 +40,9 @@ class A
 class B extends A
 {
 	x;
-	f()
+	f() // public
 	{
+		// super.f(); // doesn't exist
 		this.x = 0;
 	}
 }
