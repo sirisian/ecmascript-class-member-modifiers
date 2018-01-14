@@ -42,7 +42,7 @@ class B extends A
 	x;
 	f() // public
 	{
-		// super.f(); // doesn't exist
+		// super.f(); // Invalid
 		this.x = 0;
 	}
 }
