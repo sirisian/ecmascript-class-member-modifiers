@@ -295,3 +295,5 @@ class C extends A // Invalid, must define abstract methods
 let b = new B();
 b.x();
 ```
+
+This does bring up a question if "abstract" as a keyword modifier on classes and functions is necessary. One argument for including it is to ensure that protected constructor isn't bypassed using a friend modifier.
