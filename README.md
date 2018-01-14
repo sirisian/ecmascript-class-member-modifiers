@@ -1,4 +1,4 @@
-# ECMAScript Proposal: Public, Private, Protected, Static, Abstract, and Friend
+# ECMAScript Proposal: Public, Private, Protected, Static, and Friend
 
 ## Introduction
 
@@ -54,7 +54,7 @@ class B extends A
 
 ### Private constructor
 
-Used in utility classes, singleton, factory, and various other designs. A private constructor stops instances from being made. It also stops classes from extending it since constructing the class would involved invoking the private constructor.
+Used in utility classes, singleton, factory, and various other designs. A private constructor stops instances from being made. It also stops classes from extending it since constructing the class would involve invoking the private constructor.
 
 ```js
 class A
@@ -64,7 +64,7 @@ class A
 	}
 }
 
-// let a = new A(); // Invalid
+// let a = new A(); // Invalid: A's constructor is private
 ```
 
 ## Protected
@@ -82,6 +82,26 @@ class B extends A
 		this.x = 0;
 	}
 }
+```
+
+### Protected constructor
+
+A protected constructor creates an abstract class that can't be instantiated, but it can be extended.
+
+```js
+class A
+{
+	protected constructor()
+	{
+	}
+}
+
+class B extends A
+{
+}
+
+// let a = new A(); // Invalid: A's constructor is protected
+let b = new B();
 ```
 
 ## Static
@@ -174,31 +194,14 @@ let a = new A();
 // constructor
 ```
 
-## Abstract
-
-```js
-abstract class A
-{
-	
-}
-
-class B extends A
-{
-	
-}
-
-// let a = new A(); // Error: A is abstract
-let b = new B();
-```
-
 ## Friend
 
 ```js
 class A
 {
-	friend B;
-	friend C.f(a);
-	friend f();
+	friend B; // friend class
+	friend C.f(a); // friend class method
+	friend f(); // friend function
 	private a;
 }
 ```
@@ -240,5 +243,22 @@ A friend function allows a function in scope to access the private members.
 function f(a)
 {
 	a.a = 0;
+}
+```
+
+Using a friend is also a way to bypass a private constructor. This is seen in other languages like C++.
+
+```js
+class A
+{
+	friend B;
+	private constructor()
+	{
+	}
+}
+
+class B
+{
+	a = new A();
 }
 ```
