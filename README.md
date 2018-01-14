@@ -281,7 +281,7 @@ class A
 ```js
 class A
 {
-	x(); // No function body indicates this is an abstract function
+	x(); // No method body indicates this is an abstract method
 	// private x(); // Illegal, private methods cannot be abstract
 }
 class B extends A
@@ -290,6 +290,11 @@ class B extends A
 	{
 	}
 }
+/*
+class C extends A // Invalid, must define abstract methods
+{
+}
+*/
 // let a = new A(); // Abstract function x undefined.
 let b = new B();
 b.x();
