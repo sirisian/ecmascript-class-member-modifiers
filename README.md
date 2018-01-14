@@ -17,7 +17,6 @@ class A
 {
 	x;
 	y = 0; // initial values can be set here or in the constructor
-	
 	constructor()
 	{
 		this.x = 0;
@@ -30,11 +29,9 @@ class A
 class A
 {
 	private x;
-	
 	constructor()
 	{
 	}
-	
 	private f()
 	{
 	}
@@ -43,8 +40,6 @@ class A
 class B extends A
 {
 	x;
-	y = 0;
-	
 	f()
 	{
 		this.x = 0;
@@ -260,5 +255,22 @@ class A
 class B
 {
 	a = new A();
+}
+```
+
+## Using public, private, and static together
+
+Because this can access any modifier there's a consistent syntax.
+
+```js
+class A
+{
+	x;
+	private y;
+	static z;
+	f()
+	{
+		return this.x + this.y + this.z;
+	}
 }
 ```
