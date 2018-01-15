@@ -329,3 +329,7 @@ class D extends protected A
     // z is protected
 };
 ```
+
+# Other considerations
+
+How does this work with Object.defineProperty? Is there a new modifier field?
