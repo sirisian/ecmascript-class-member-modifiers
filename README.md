@@ -25,18 +25,23 @@ class A
 class A
 {
 	private x;
-	constructor()
-	{
-	}
 	private f()
 	{
+	}
+	private get X()
+	{
+		return this.x;
+	}
+	private set X(x)
+	{
+		this.x = x;
 	}
 }
 
 class B extends A
 {
 	x;
-	f() // public
+	f()
 	{
 		// super.f(); // Invalid
 		this.x = 0;
@@ -65,6 +70,17 @@ class A
 class A
 {
 	protected x;
+	protected f()
+	{
+	}
+	protected get X()
+	{
+		return this.x;
+	}
+	protected set X(x)
+	{
+		this.x = x;
+	}
 }
 
 class B extends A
@@ -134,7 +150,7 @@ class B extends A
 B.x = 0;
 ```
 
-"static private x;" would not be allowed so the order of the modifiers matters.
+```static private x;``` would not be allowed so the order of the modifiers matters.
 
 ### Protected static
 
@@ -157,7 +173,7 @@ class B extends A
 // B.x = 0; // Invalid, x is private
 ```
 
-Similarly as private "static protected x;" is invalid syntax.
+Similarly as private ```static protected x;``` is invalid syntax.
 
 ### Static constructor
 
