@@ -165,7 +165,7 @@ class B extends A
 {
 	constructor()
 	{
-		this.x = 0;
+		this.constructor.x = 0;
 	}
 }
 
